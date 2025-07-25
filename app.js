@@ -1,7 +1,6 @@
 const chatBox = document.getElementById('chat-box');
 const sendBtn = document.getElementById('send-btn');
 const userInput = document.getElementById('user-input');
-let pipelineInstance;
 
 // Función para agregar mensajes
 function addMessage(text, sender, typing = false) {
@@ -31,17 +30,20 @@ function typeText(element, text, speed = 30) {
   });
 }
 
-// Inicializa el modelo (tiny-random-gpt2)
-async function initModel() {
-  addMessage("Cargando IA, espera un momento...", "bot");
-  pipelineInstance = await window.transformers.pipeline("text-generation", "Xenova/tiny-random-gpt2");
-  chatBox.lastChild.textContent = "¡IA lista para conversar contigo! ❤️";
-}
-
-// Obtiene respuesta del modelo
+// Obtiene respuesta desde el servidor (en lugar de pipeline local)
 async function getIAResponse(prompt) {
-  const result = await pipelineInstance(prompt, { max_length: 40 });
-  return result[0].generated_text.replace(prompt, "").trim();
+  try {
+    const response = await fetch('http://localhost:3000/ia', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: prompt })
+    });
+    const data = await response.json();
+    return data.reply;
+  } catch (error) {
+    console.error('Error al conectar con el servidor:', error);
+    return "Ups... no puedo responder ahora 😢";
+  }
 }
 
 // Evento al enviar mensaje
@@ -60,5 +62,3 @@ sendBtn.addEventListener('click', async () => {
 userInput.addEventListener('keydown', (e) => {
   if (e.key === "Enter") sendBtn.click();
 });
-
-initModel();
