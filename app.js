@@ -33,7 +33,7 @@ function typeText(element, text, speed = 30) {
 // Obtiene respuesta desde el servidor (en lugar de pipeline local)
 async function getIAResponse(prompt) {
   try {
-    const response = await fetch('https://servidor-chatbot-25-7-25.onrender.com/', {
+    const response = await fetch('https://servidor-chatbot-25-7-25.onrender.com/ia', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: prompt })
