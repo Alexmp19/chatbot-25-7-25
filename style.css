@@ -1,36 +1,47 @@
+/* Reset y base */
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* Mejor que height: 100vh para móviles */
   margin: 0;
+  padding: 1rem;
+  font-size: 1rem; /* Escalable */
 }
+
+/* Contenedor del chat */
 .chat-container {
   background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
-  width: 350px;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
 }
+
+/* Caja del chat */
 #chat-box {
   flex: 1;
   border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
   overflow-y: auto;
-  max-height: 300px;
+  max-height: 50vh; /* Se adapta mejor a pantalla */
   background: #fdfdfd;
 }
+
+/* Mensajes */
 .message {
-  padding: 8px;
-  border-radius: 8px;
-  margin-bottom: 5px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
   max-width: 80%;
+  word-wrap: break-word;
 }
 .user {
   background: #ff6b81;
@@ -42,20 +53,96 @@ body {
   color: black;
   align-self: flex-start;
 }
-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 5px;
+
+/* Input + botón en fila */
+input, button {
+  font-size: 1rem;
 }
+
+input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  height: 2.5rem; /* Controla la altura */
+  line-height: 1rem; /* Opcional: ajusta la alineación vertical */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 button {
   background: #ff6b81;
   color: white;
   border: none;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
+  margin-left: 0.5rem;
 }
 button:hover {
   background: #ff4757;
 }
+
+/* Contenedor input + botón */
+.chat-container input,
+.chat-container button {
+  margin-bottom: 0.25rem;
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.875rem; /* Tamaño tipo ChatGPT */
+  color: #555;
+  margin-top: 1rem;
+  padding: 1rem 0;
+  opacity: 0.8;
+}
+
+/* Asegura que no quede pegado al borde inferior si hay poco contenido */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 95vh;
+}
+
+.chat-container {
+  flex: 1;
+}
+
+@media (min-width: 400px) {
+  .chat-container input,
+  .chat-container button {
+    margin-bottom: 0;
+  }
+
+  .chat-container {
+    gap: 0.5rem;
+  }
+
+  .chat-container > input,
+  .chat-container > button {
+    display: inline-block;
+  }
+
+  .chat-container {
+    flex-direction: column;
+  }
+}
+
+/* Responsividad extra */
+@media (max-width: 480px) {
+  .chat-container {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  input, button {
+    font-size: 1rem;
+  }
+
+  #chat-box {
+    max-height: 40vh;
+  }
+}
+
